@@ -45,8 +45,6 @@ class YouTubeUploader:
         input("Have you logged in successfully?")
 
     def upload(self, video: Video) -> None:
-        print(video)
-
         self.webdriver.open_page(YOUTUBE_CHANNEL_URL)
 
         self.webdriver.click(CREATE_VIDEO_BUTTON_SELECTOR)
