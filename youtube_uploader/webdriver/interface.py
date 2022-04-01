@@ -13,7 +13,7 @@ class IWebDriver:
         pass
 
     @abc.abstractmethod
-    def click(self, css_selector: str, timeout: int = None) -> None:
+    def click(self, css_selector: str, timeout: int | None = None) -> None:
         pass
 
     @abc.abstractmethod
