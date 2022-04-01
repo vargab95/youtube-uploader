@@ -47,7 +47,10 @@ class YouTubeUploader:
     def upload(self, video: Video) -> None:
         self.webdriver.open_page(YOUTUBE_CHANNEL_URL)
 
+        self.webdriver.wait_for_element(CREATE_VIDEO_BUTTON_SELECTOR)
         self.webdriver.click(CREATE_VIDEO_BUTTON_SELECTOR)
+
+        self.webdriver.wait_for_element(UPLOAD_VIDEO_BUTTON_SELECTOR)
         self.webdriver.click(UPLOAD_VIDEO_BUTTON_SELECTOR)
 
         self.webdriver.set_input_value(VIDEO_PATH_SELECTOR, video.path)
