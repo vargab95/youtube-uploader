@@ -40,7 +40,7 @@ class UndetectedChromeWebDriver(IWebDriver):
                 self.__find_element(css_selector).clear()
             self.__find_element(css_selector).send_keys(value)
 
-    def click(self, css_selector: str, timeout: int = None) -> None:
+    def click(self, css_selector: str, timeout: int | None = None) -> None:
         try:
             if timeout is not None:
                 wait = WebDriverWait(self.__driver, timeout)
