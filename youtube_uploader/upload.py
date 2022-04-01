@@ -7,7 +7,6 @@ from .webdriver import IWebDriver
 
 
 YOUTUBE_URL = "https://studio.youtube.com"
-YOUTUBE_CHANNEL_URL = "https://studio.youtube.com/channel/UCHDQ-fvoapc7SzMuUS5sA1A"
 
 VIDEO_PATH_SELECTOR = '[name="Filedata"]'
 VIDEO_THUMBNAIL_SELECTOR = "#still-picker #file-loader"
@@ -35,6 +34,8 @@ class Video:
     description: str
     tags: typing.List[str]
 
+    channel: str | None = None
+
 
 @dataclass
 class YouTubeUploader:
@@ -45,7 +46,12 @@ class YouTubeUploader:
         input("Have you logged in successfully?")
 
     def upload(self, video: Video) -> None:
-        self.webdriver.open_page(YOUTUBE_CHANNEL_URL)
+        if video.channel:
+            self.webdriver.open_page(video.channel)
+        else:
+            self.webdriver.open_page(YOUTUBE_URL)
+
+        time.sleep(5)
 
         self.webdriver.wait_for_element(CREATE_VIDEO_BUTTON_SELECTOR)
         self.webdriver.click(CREATE_VIDEO_BUTTON_SELECTOR)
