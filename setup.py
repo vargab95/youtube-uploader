@@ -10,6 +10,6 @@ def parse_requirements(filename):
 setup(
     name="youtube_uploader",
     version="1.0.0",
-    packages=[],
+    packages=["youtube_uploader", "youtube_uploader.webdriver"],
     install_requires=parse_requirements("requirements.txt"),
 )
