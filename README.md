@@ -26,7 +26,8 @@ v = Video(path="video path",
           title="title",
           description="description",
           category=1,
-          tags="tag1, tag2")
+          tags="tag1, tag2",
+          channel="youtube channel")
 
 uploader.login()
 uploader.upload(v)
