@@ -27,13 +27,13 @@ VIDEO_TAGS_SEPARATOR = ","
 @dataclass
 class Video:
     path: str
-    thumbnail: str
 
     title: str
     category: str
     description: str
     tags: typing.List[str]
 
+    thumbnail: str | None = None
     channel: str | None = None
 
 
@@ -62,7 +62,9 @@ class YouTubeUploader:
         self.webdriver.set_input_value(VIDEO_PATH_SELECTOR, video.path)
         self.webdriver.wait_for_element(VIDEO_THUMBNAIL_SELECTOR)
 
-        self.webdriver.set_input_value(VIDEO_THUMBNAIL_SELECTOR, video.thumbnail)
+        if video.thumbnail:
+            self.webdriver.set_input_value(VIDEO_THUMBNAIL_SELECTOR, video.thumbnail)
+
         self.webdriver.set_input_value(VIDEO_TITLE_SELECTOR, video.title)
         self.webdriver.set_input_value(VIDEO_DESCRIPTION_SELECTOR, video.description)
         self.webdriver.click(NOT_FOR_KIDS_SELECTOR)
