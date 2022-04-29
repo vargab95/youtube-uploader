@@ -15,6 +15,7 @@ VIDEO_DESCRIPTION_SELECTOR = "#description-container #textbox"
 VIDEO_TAGS_SELECTOR = "#chip-bar #text-input"
 VIDEO_PUBLIC_BUTTON_SELECTOR = '[name="PUBLIC"] #offRadio'
 NOT_FOR_KIDS_SELECTOR = '[name="VIDEO_MADE_FOR_KIDS_NOT_MFK"] #offRadio'
+FOR_KIDS_SELECTOR = '[name="VIDEO_MADE_FOR_KIDS_MFK"] #offRadio'
 MORE_BUTTON_SELECTOR = "#toggle-button"
 NEXT_BUTTON_SELECTOR = "#next-button"
 DONE_BUTTON_SELECTOR = "#done-button"
@@ -35,6 +36,7 @@ class Video:
 
     thumbnail: str | None = None
     channel: str | None = None
+    for_kids: bool | None = None
 
 
 @dataclass
@@ -67,7 +69,10 @@ class YouTubeUploader:
 
         self.webdriver.set_input_value(VIDEO_TITLE_SELECTOR, video.title)
         self.webdriver.set_input_value(VIDEO_DESCRIPTION_SELECTOR, video.description)
-        self.webdriver.click(NOT_FOR_KIDS_SELECTOR)
+
+        if video.for_kids is not None:
+            self.webdriver.click(FOR_KIDS_SELECTOR if video.for_kids else NOT_FOR_KIDS_SELECTOR)
+
         self.webdriver.click(MORE_BUTTON_SELECTOR)
 
         for tag in video.tags:
