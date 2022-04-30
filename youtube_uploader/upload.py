@@ -1,5 +1,6 @@
 import time
 import typing
+import enum
 
 from dataclasses import dataclass
 
@@ -25,6 +26,12 @@ UPLOAD_VIDEO_BUTTON_SELECTOR = "#creation-menu #text-item-0"
 VIDEO_TAGS_SEPARATOR = ","
 
 
+class VisibilityTypes(enum.Enum):
+    PRIVATE = "private"
+    NON_PUBLIC = "non-public"
+    PUBLIC = "public"
+
+
 @dataclass
 class Video:
     path: str
@@ -37,6 +44,7 @@ class Video:
     thumbnail: str | None = None
     channel: str | None = None
     for_kids: bool | None = None
+    visibility: VisibilityTypes | None = None
 
 
 @dataclass
@@ -83,7 +91,11 @@ class YouTubeUploader:
             time.sleep(5)
             self.webdriver.click(NEXT_BUTTON_SELECTOR)
 
-        self.webdriver.click(VIDEO_PUBLIC_BUTTON_SELECTOR)
+        if video.visibility is not None:
+            if video.visibility == VisibilityTypes.PUBLIC:
+                self.webdriver.click(VIDEO_PUBLIC_BUTTON_SELECTOR)
+            else:
+                raise NotImplementedError
         time.sleep(5)
         self.webdriver.click(DONE_BUTTON_SELECTOR)
         time.sleep(10)
